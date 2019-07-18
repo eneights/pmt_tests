@@ -124,7 +124,7 @@ def thickness_plots(pmt_num):
     plt.close()
 
     if pmt_num == 3:
-        x, = plt.plot(mean_below_array[0, :], mean_below_array[1, :], 'green')
+        plt.plot(mean_below_array[0, :], mean_below_array[1, :], 'green')
         plt.errorbar(mean_below_array[0, :], mean_below_array[1, :], sigma)
         plt.xlabel('Azimuthal Angle (degrees)')
         plt.ylabel('Thickness (mm)')
