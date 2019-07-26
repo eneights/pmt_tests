@@ -15,12 +15,28 @@ def thickness_plots_bulb(pmt_num):
     myfile = open(data_path / str('pmt_' + str(pmt_num) + '_bulb.csv'), 'r')    # Opens file with bulb data
     csv_reader = csv.reader(myfile)
     row_num = -1
-    for row in csv_reader:              # Creates array with base of neck data
+    for row in csv_reader:                                                      # Creates array with bulb data
         if row_num >= 0:
             for i in range(5):
                 data_array[i, row_num] = float(row[i])
         row_num += 1
     myfile.close()
+
+    error_1 = np.std(data_array[1, :]) / np.sqrt(len(data_array[1, :]))
+    dispersion_1 = error_1 / np.mean(data_array[1, :])
+    dispersion_1 = format(dispersion_1 * 100, '.2f')
+
+    error_2 = np.std(data_array[2, :]) / np.sqrt(len(data_array[2, :]))
+    dispersion_2 = error_2 / np.mean(data_array[2, :])
+    dispersion_2 = format(dispersion_2 * 100, '.2f')
+
+    error_3 = np.std(data_array[3, :]) / np.sqrt(len(data_array[3, :]))
+    dispersion_3 = error_3 / np.mean(data_array[3, :])
+    dispersion_3 = format(dispersion_3 * 100, '.2f')
+
+    error_4 = np.std(data_array[4, :]) / np.sqrt(len(data_array[4, :]))
+    dispersion_4 = error_4 / np.mean(data_array[4, :])
+    dispersion_4 = format(dispersion_4 * 100, '.2f')
 
     sigma = 0.0152
 
@@ -38,6 +54,9 @@ def thickness_plots_bulb(pmt_num):
     plt.xlabel('Azimuthal Angle (degrees)')
     plt.ylabel('Thickness (mm)')
     plt.title('PMT ' + str(pmt_num) + ' Thicknesses (Bulb)')
+    plt.text(0.05, 0.95, str('Dispersion\nPoint 1: ' + str(dispersion_1) + '%\nPoint 2: ' + str(dispersion_2)
+                             + '%\nPoint 3: ' + str(dispersion_3) + '%\nPoint 4: ' + str(dispersion_4) + '%'),
+             transform=ax.transAxes, verticalalignment='top', bbox=dict(alpha=0.5))
     plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                      '_thicknesses_bulb.png'), dpi=360)
     plt.close()
@@ -47,7 +66,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="thickness_plots_bulb", description="Creates plot of PMT thickness "
                                                                               "measurements taken on bulb")
-    parser.add_argument("--pmt_num", type=int, help='number of PMT (default=1)', default=1)
+    parser.add_argument("--pmt_num", type=int, help='number of PMT (default=4)', default=4)
     args = parser.parse_args()
 
     thickness_plots_bulb(args.pmt_num)

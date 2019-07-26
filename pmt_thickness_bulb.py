@@ -31,6 +31,22 @@ def thickness_plots_bulb(pmt_num):
         mean_data_array[3, i] = np.mean(data_array[5:7, i])
         mean_data_array[4, i] = np.mean(data_array[7:9, i])
 
+    error_1 = np.std(mean_data_array[1, :]) / np.sqrt(len(mean_data_array[1, :]))
+    dispersion_1 = error_1 / np.mean(mean_data_array[1, :])
+    dispersion_1 = format(dispersion_1 * 100, '.2f')
+
+    error_2 = np.std(mean_data_array[2, :]) / np.sqrt(len(mean_data_array[2, :]))
+    dispersion_2 = error_2 / np.mean(mean_data_array[2, :])
+    dispersion_2 = format(dispersion_2 * 100, '.2f')
+
+    error_3 = np.std(mean_data_array[3, :]) / np.sqrt(len(mean_data_array[3, :]))
+    dispersion_3 = error_3 / np.mean(mean_data_array[3, :])
+    dispersion_3 = format(dispersion_3 * 100, '.2f')
+
+    error_4 = np.std(mean_data_array[4, :]) / np.sqrt(len(mean_data_array[4, :]))
+    dispersion_4 = error_4 / np.mean(mean_data_array[4, :])
+    dispersion_4 = format(dispersion_4 * 100, '.2f')
+
     if pmt_num == 1:
         sigma = 0.0118
     elif pmt_num == 2:
@@ -54,6 +70,9 @@ def thickness_plots_bulb(pmt_num):
     plt.xlabel('Azimuthal Angle (degrees)')
     plt.ylabel('Thickness (mm)')
     plt.title('PMT ' + str(pmt_num) + ' Thicknesses (Bulb)')
+    plt.text(0.05, 0.95, str('Dispersion\nPoint 1: ' + str(dispersion_1) + '%\nPoint 2: ' + str(dispersion_2)
+                             + '%\nPoint 3: ' + str(dispersion_3) + '%\nPoint 4: ' + str(dispersion_4) + '%'),
+             transform=ax.transAxes, verticalalignment='top', bbox=dict(alpha=0.5))
     plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                      '_thicknesses_bulb.png'), dpi=360)
     plt.close()

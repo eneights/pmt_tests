@@ -42,6 +42,10 @@ def thickness_plots(pmt_num):
         for i in range(12):
             mean_below_array[1, i] = np.mean(below_array[1:7, i])
 
+        error_below = np.std(mean_below_array[1, :]) / np.sqrt(len(mean_below_array[1, :]))
+        dispersion_below = error_below / np.mean(mean_below_array[1, :])
+        dispersion_below = format(dispersion_below * 100, '.2f')
+
     else:
         # Reads PMT Data (mm)
         myfile = open(data_path / str('pmt_' + str(pmt_num) + '_base.csv'), 'r')    # Opens file with base of neck data
@@ -93,6 +97,18 @@ def thickness_plots(pmt_num):
         for i in range(12):
             mean_below_array[1, i] = np.mean(below_array[1:7, i])
 
+        error_base = np.std(mean_base_array[1, :]) / np.sqrt(len(mean_base_array[1, :]))
+        dispersion_base = error_base / np.mean(mean_base_array[1, :])
+        dispersion_base = format(dispersion_base * 100, '.2f')
+
+        error_above = np.std(mean_above_array[1, :]) / np.sqrt(len(mean_above_array[1, :]))
+        dispersion_above = error_above / np.mean(mean_above_array[1, :])
+        dispersion_above = format(dispersion_above * 100, '.2f')
+
+        error_below = np.std(mean_below_array[1, :]) / np.sqrt(len(mean_below_array[1, :]))
+        dispersion_below = error_below / np.mean(mean_below_array[1, :])
+        dispersion_below = format(dispersion_below * 100, '.2f')
+
     # Creates plots
     def func(m, a, b, c):  # Defines Gaussian function (a is amplitude, b is mean, c is standard deviation)
         return a * np.exp(-(m - b) ** 2.0 / (2 * c ** 2))
@@ -129,6 +145,8 @@ def thickness_plots(pmt_num):
         plt.xlabel('Azimuthal Angle (degrees)')
         plt.ylabel('Thickness (mm)')
         plt.title('PMT ' + str(pmt_num) + ' Thickness (1 cm Below Base of Neck)')
+        plt.text(0.05, 0.95, str('Dispersion\n1 cm Below: ' + str(dispersion_below) + '%'), transform=ax.transAxes,
+                 verticalalignment='top', bbox=dict(alpha=0.5))
         plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                          '_thicknesses.png'), dpi=360)
         plt.close()
@@ -143,6 +161,9 @@ def thickness_plots(pmt_num):
         plt.xlabel('Azimuthal Angle (degrees)')
         plt.ylabel('Thickness (mm)')
         plt.title('PMT ' + str(pmt_num) + ' Thicknesses')
+        plt.text(0.05, 0.95, str('Dispersion\nBase: ' + str(dispersion_base) + '%\n1 cm Above: ' + str(dispersion_above)
+                                 + '%\n1 cm Below: ' + str(dispersion_below) + '%'), transform=ax.transAxes,
+                 verticalalignment='top', bbox=dict(alpha=0.5))
         plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                          '_thicknesses.png'), dpi=360)
         plt.close()
