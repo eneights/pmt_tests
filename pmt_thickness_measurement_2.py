@@ -42,6 +42,16 @@ def thickness_plots(pmt_num):
     dispersion_below = error_below / np.mean(below_array[1, :])
     dispersion_below = format(dispersion_below * 100, '.2f')
 
+    if pmt_num == 4:
+        x_pt = 225
+        y_pt = 4.3
+    elif pmt_num == 5:
+        x_pt = 240
+        y_pt = 4.5
+    else:
+        x_pt = 240
+        y_pt = 4.7
+
     # Creates plots
     x, = plt.plot(base_array[0, :], base_array[1, :], 'blue')
     plt.errorbar(base_array[0, :], base_array[1, :], sigma)
@@ -53,9 +63,9 @@ def thickness_plots(pmt_num):
     plt.xlabel('Azimuthal Angle (degrees)')
     plt.ylabel('Thickness (mm)')
     plt.title('PMT ' + str(pmt_num) + ' Thicknesses')
-    plt.text(0.05, 0.95, str('Dispersion\nBase: ' + str(dispersion_base) + '%\n1 cm Above: ' + str(dispersion_above)
-                             + '%\n1 cm Below: ' + str(dispersion_below) + '%'), transform=ax.transAxes,
-             verticalalignment='top', bbox=dict(alpha=0.5))
+    plt.text(x_pt, y_pt, str('Dispersion:\nBase - ' + str(dispersion_base) + '%\n1 cm Above - ' + str(dispersion_above)
+                             + '%\n1 cm Below - ' + str(dispersion_below) + '%'), verticalalignment='top',
+             bbox=dict(alpha=0.5, facecolor='none'))
     plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                      '_thicknesses.png'), dpi=360)
     plt.close()

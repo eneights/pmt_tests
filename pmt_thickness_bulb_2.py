@@ -40,6 +40,16 @@ def thickness_plots_bulb(pmt_num):
 
     sigma = 0.0152
 
+    if pmt_num == 4:
+        x_pt = 75
+        y_pt = 3.8
+    elif pmt_num == 5:
+        x_pt = 100
+        y_pt = 5.2
+    else:
+        x_pt = 200
+        y_pt = 2.5
+
     # Makes plots
     print('Making plots...')
     a, = plt.plot(data_array[0, :], data_array[1, :], 'blue')
@@ -54,9 +64,9 @@ def thickness_plots_bulb(pmt_num):
     plt.xlabel('Azimuthal Angle (degrees)')
     plt.ylabel('Thickness (mm)')
     plt.title('PMT ' + str(pmt_num) + ' Thicknesses (Bulb)')
-    plt.text(0.05, 0.95, str('Dispersion\nPoint 1: ' + str(dispersion_1) + '%\nPoint 2: ' + str(dispersion_2)
-                             + '%\nPoint 3: ' + str(dispersion_3) + '%\nPoint 4: ' + str(dispersion_4) + '%'),
-             transform=ax.transAxes, verticalalignment='top', bbox=dict(alpha=0.5))
+    plt.text(x_pt, y_pt, str('Dispersion:\nPoint 1 - ' + str(dispersion_1) + '%\nPoint 2 - ' + str(dispersion_2)
+                             + '%\nPoint 3 - ' + str(dispersion_3) + '%\nPoint 4 - ' + str(dispersion_4) + '%'),
+             verticalalignment='top', bbox=dict(alpha=0.5, facecolor='none'))
     plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                      '_thicknesses_bulb.png'), dpi=360)
     plt.close()

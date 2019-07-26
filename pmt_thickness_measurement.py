@@ -139,14 +139,24 @@ def thickness_plots(pmt_num):
                      '_point_1.png'), dpi=360)
     plt.close()
 
+    if pmt_num == 1:
+        x_pt = 200
+        y_pt = 4.3
+    elif pmt_num == 2:
+        x_pt = 25
+        y_pt = 3
+    else:
+        x_pt = 200
+        y_pt = 3.4
+
     if pmt_num == 3:
         plt.plot(mean_below_array[0, :], mean_below_array[1, :], 'green')
         plt.errorbar(mean_below_array[0, :], mean_below_array[1, :], sigma)
         plt.xlabel('Azimuthal Angle (degrees)')
         plt.ylabel('Thickness (mm)')
         plt.title('PMT ' + str(pmt_num) + ' Thickness (1 cm Below Base of Neck)')
-        plt.text(0.05, 0.95, str('Dispersion\n1 cm Below: ' + str(dispersion_below) + '%'), transform=ax.transAxes,
-                 verticalalignment='top', bbox=dict(alpha=0.5))
+        plt.text(x_pt, y_pt, str('Dispersion:\n1 cm Below - ' + str(dispersion_below) + '%'), verticalalignment='top',
+                 bbox=dict(alpha=0.5, facecolor='none'))
         plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                          '_thicknesses.png'), dpi=360)
         plt.close()
@@ -161,9 +171,9 @@ def thickness_plots(pmt_num):
         plt.xlabel('Azimuthal Angle (degrees)')
         plt.ylabel('Thickness (mm)')
         plt.title('PMT ' + str(pmt_num) + ' Thicknesses')
-        plt.text(0.05, 0.95, str('Dispersion\nBase: ' + str(dispersion_base) + '%\n1 cm Above: ' + str(dispersion_above)
-                                 + '%\n1 cm Below: ' + str(dispersion_below) + '%'), transform=ax.transAxes,
-                 verticalalignment='top', bbox=dict(alpha=0.5))
+        plt.text(x_pt, y_pt, str('Dispersion:\nBase - ' + str(dispersion_base) + '%\n1 cm Above - ' +
+                                 str(dispersion_above) + '%\n1 cm Below - ' + str(dispersion_below) + '%'),
+                 verticalalignment='top', bbox=dict(alpha=0.5, facecolor='none'))
         plt.savefig(Path(r'/Users/Eliza/Documents/WATCHMAN/PMT Testing/thickness_plots/pmt_' + str(pmt_num) +
                          '_thicknesses.png'), dpi=360)
         plt.close()
